@@ -1,0 +1,8 @@
+VOLUME=/tmp
+CONTAINER=kaki-influxdb
+HOST=$CONTAINER
+PORT=8086
+IMAGE=influxdb
+BLUEMIX_CONTAINER_MEMORY=128
+REGISTRY=registry.ng.bluemix.net/mynodeappbue
+BLUEMIX_IMG=$REGISTRY/$IMAGE
