@@ -7,6 +7,6 @@ base_folder=$(dirname $devops_folder)
 
 docker stop $CONTAINER
 docker rm $CONTAINER
-
-docker run -d -h $HOST --name  $CONTAINER -p $DB_PORT:$DB_PORT -v $VOLUME:/var/lib/influxdb influxdb
+docker pull $IMAGE
+docker run -d -h $HOST --name $CONTAINER -p $PORT:$PORT -v $VOLUME:/var/lib/influxdb $IMAGE
 docker logs -f $CONTAINER
