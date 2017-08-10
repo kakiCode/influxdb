@@ -9,4 +9,4 @@ docker stop $CONTAINER
 docker rm $CONTAINER
 docker pull $IMAGE
 docker run -d -h $HOST --name $CONTAINER -p $PORT:$PORT -v $VOLUME:/var/lib/influxdb $IMAGE
-docker logs -f $CONTAINER
+#docker logs -f $CONTAINER
