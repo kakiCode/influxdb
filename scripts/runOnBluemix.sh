@@ -1,15 +1,10 @@
 #!/bin/sh
 
-devops_folder=$(dirname $(readlink -f $0))
-base_folder=$(dirname $devops_folder)
+scripts_folder=$(dirname $(readlink -f $0))
+base_folder=$(dirname $scripts_folder)
 
-. $devops_folder/VARS.sh
+. $scripts_folder/VARS.sh
 
-docker pull $IMAGE
-IMAGE_ID=`docker images | grep -E "^$IMAGE.*latest" | awk -e '{print $3}'`
-echo "...image id: $IMAGE_ID"
-docker tag $IMAGE_ID $BLUEMIX_IMG
-docker push $BLUEMIX_IMG
 
 CONTAINER_ID=`cf ic ps -a | grep -E "$IMAGE" | awk -e '{print $1}'`
 echo "...container id: $CONTAINER_ID"
@@ -40,6 +35,10 @@ if [ ! -z "$CONTAINER_ID" ]; then
 
 fi
 
+
+docker push $BLUEMIX_IMG
+sleep 24
+
 cf ic run -d --name $CONTAINER -p $PORT -m $BLUEMIX_CONTAINER_MEMORY $BLUEMIX_IMG
 
 running="1"
@@ -50,5 +49,7 @@ do
         echo "is container running (0=true) ? $running"
         sleep 6
 done
+
+cf ic rmi $BLUEMIX_IMG
 
 cf ic logs -f $CONTAINER
