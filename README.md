@@ -1,27 +1,26 @@
-# influxdb
+## docker image for influxdb
 
-## influxdb docker container handling scripts
+- can be pulled from docker hub:
+    - [caquicode/influxdb](https://hub.docker.com/r/caquicode/influxdb/)
 
 - hostname: influxdb
-- exposes ports: 8086
+- exposes:
+    - port 8086
+- expects:
+    - a volume to map the data folder
+- scripts:
+    - create.sh - pulls third party influxdb docker image and pushes it to dockerHub;
+    - run.sh - runs an image container in the local docker engine;
+    - httpquery.sh - queries influxdb http interface to check data in;
+- example docker-compose section:
 
-### usage:
+	  influxdb:
+	    image: caquicode/influxdb
+	    container_name: influxdb
+	    ports:
+	      - "8086:8086"
+	    volumes:
+	      - /tmp/influxdb:/var/lib/influxdb
 
-- edit VARS.sh accordingly:
-  ```
-  NAME=influxdb
-  VOLUME=/tmp
-  CONTAINER=$NAME
-  HOST=$CONTAINER
-  PORT=8086
-  IMAGE=$NAME
-  IMAGE_VERSION=latest
-  BLUEMIX_CONTAINER_MEMORY=128
-  REGISTRY=registry.ng.bluemix.net/mynodeappbue
-  BLUEMIX_IMG=$REGISTRY/$IMAGE
-  DOCKER_HUB_IMG=kakicode/$NAME
-  ```
-- scripts/copyImage.sh - push docker image to dockerHub (/kakicode/influxdb) and private bluemix registry (registry.ng.bluemix.net/mynodeappbue/influxdb)
-- scripts/runLocal.sh - run on local docker engine
-- scripts/runOnBluemix.sh - run on bluemix
-- scripts/attachOnBluemix.sh - attach to bluemix bash process
+
+

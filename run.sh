@@ -1,9 +1,12 @@
 #!/bin/sh
 
-scripts_folder=$(dirname $(readlink -f $0))
-base_folder=$(dirname $scripts_folder)
-
-. $scripts_folder/VARS.sh
+NAME=influxdb
+VOLUME=/tmp
+PORT=8086
+CONTAINER=$NAME
+HOST=$CONTAINER
+IMAGE=$NAME
+DOCKER_HUB_IMG=caquicode/$NAME
 
 docker stop $CONTAINER
 docker rm $CONTAINER
